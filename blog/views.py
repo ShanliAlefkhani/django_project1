@@ -1,15 +1,19 @@
 from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
+#from django.http import HttpResponse, JsonResponse
+from .models import Article
 
 # Create your views here.
+
+
 def home(request):
 	context = {
-		"articles": [
-			{
-				"title": "Earth",
-				"description": "This is the Earth",
-				"img": "https://www.metoffice.gov.uk/binaries/content/gallery/metofficegovuk/hero-images/advice/maps-satellite-images/satellite-image-of-globe.jpg"
-			}
-		]
+		"articles": Article.objects.filter(status="p").order_by("-publish")#[:2] ke mige chandtaye akhar neshun dade beshan
 	}
 	return render(request, "blog/home.html", context)
+
+
+def detail(request, slug):
+	context = {
+		"article": Article.objects.get(slug=slug)
+	}
+	return render(request, "blog/detail.html", context)	
