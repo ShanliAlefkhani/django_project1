@@ -3,20 +3,13 @@ from django.http import HttpResponse, JsonResponse
 
 # Create your views here.
 def home(request):
-	return HttpResponse("Hello, World!!")
-
-
-def api(request):
-	data = {
-		"1": {
-			"title": "maqale aval",
-			"id": 20,
-			"slug": "first.article"
-		},
-		"2": {
-			"title": "maqale dovom",
-			"id": 21,
-			"slug": "second.article"
-		}
+	context = {
+		"articles": [
+			{
+				"title": "Earth",
+				"description": "This is the Earth",
+				"img": "https://www.metoffice.gov.uk/binaries/content/gallery/metofficegovuk/hero-images/advice/maps-satellite-images/satellite-image-of-globe.jpg"
+			}
+		]
 	}
-	return JsonResponse(data)
+	return render(request, "blog/home.html", context)
